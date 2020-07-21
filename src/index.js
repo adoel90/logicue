@@ -27,19 +27,19 @@ const themeOfLogicue = createMuiTheme({
 
   palette: {
     primary: {      
-      light:'#6d6d6d',
-      main: '#424242',
-      dark:'#1b1b1b',
-      contrastText:'#6d6d6d'
+      light:'#9b4dcb',
+      main: '#6a1b9a',
+      dark:'#37006a',
+      contrastText:'#ffffff'
 
     },
     secondary: {
-      light:'#ffff56',
-      main: '#ffea00',
-      dark:'#c7b800',
-      contrastText: '#ffff56',
-      
+      light:'#ffe54c',
+      main: '#ffb300',
+      dark:'#c68400',
+      // contrastText: 'black'
     },
+  
     error: {
       light: '#bf334c',
       main:'#B00020',
@@ -81,8 +81,8 @@ const themeOfLogicue = createMuiTheme({
 ReactDOM.render(
 
   <React.StrictMode>
-    <ThemeProvider theme={themeOfLogicue}>
-      <App />
+    <ThemeProvider theme={themeOfLogicue}>      
+        <App />      
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
