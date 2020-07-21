@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { Box, Card, CardActionArea, CardMedia, CardContent, Typography,  } from '@material-ui/core'
+import { Box, Card, CardActionArea, CardMedia, CardContent, Typography, CircularProgress  } from '@material-ui/core'
 import { useTheme, makeStyles, fade } from '@material-ui/core/styles'
 import axios from 'axios'
 const _ = require('lodash')
@@ -20,7 +20,8 @@ const Cards = props => {
 
     const { tab, idGenre  } = props;
     const classes = useStyles();
-    const [listMovieGenreDetail, setListMovieGenreDetail ] = useState(dummyFirst)
+    const [listMovieGenreDetail, setListMovieGenreDetail ] = useState(dummyFirst);
+    const [ isLoader, setLoader ] = useState(false)
 
     useEffect(() => {
 
@@ -54,6 +55,7 @@ const Cards = props => {
     useEffect(() => {
 
         const { REACT_APP_URL_API, REACT_APP_LIST_MOVIES, REACT_APP_API_KEY} = process.env;
+        setLoader(true)
 
         const header =  {  //*Need refactor-man    
     
@@ -66,6 +68,7 @@ const Cards = props => {
             .then(function(response){
 
                 console.log("Original response : ", response)
+                setLoader(false)
                 if(response !== undefined && response !== null ){
 
                     setListMovieGenreDetail(response.data.results);                  
@@ -73,48 +76,59 @@ const Cards = props => {
                 
             })
             .catch(function(error){
-                            
+                setLoader(false)
                 console.log("Error : ", error.response);
             })        
 
     },[tab])
 
     return (
-        <Box display='flex' flexWrap="wrap" alignContent="flex-start" justifyContent='center'>
-            {
-                
-                listMovieGenreDetail.length > 0 && listMovieGenreDetail.map((item, i) => {
-                    
-                    return (
-                        
-                        <Box 
-                            ml={2} mb={4} mr={2} mt={2}
-                            key={i}
-                            >
-                        <Card className={classes.root} >
-                            <CardActionArea>
-                                <CardMedia
-                                    className={classes.media}
-                                    image={`${process.env.REACT_APP_IMAGE_ORIGINAL_PATH}${item.poster_path}`}
-                                    title={item.original_title}
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        {item.title}
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary" component="p">
-                                        {
-                                            item.overview
-                                        }
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>                           
-                        </Card>
-                    </Box>          
+        <>
+            <Box display="flex" alignContent='flex-start' justifyContent='center' mt={2}>
+                {
+                    isLoader === true && (
+
+                        <CircularProgress size={32} color='primary' />
                     )
-                })
-            }
-        </Box>
+                }
+            </Box>
+            <Box display='flex' flexWrap="wrap" alignContent="flex-start" justifyContent='center'>
+
+                {
+                    
+                    listMovieGenreDetail.length > 0 && listMovieGenreDetail.map((item, i) => {
+                        
+                        return (
+                            
+                            <Box 
+                                ml={2} mb={4} mr={2} mt={2}
+                                key={i}
+                            >                            
+                            <Card className={classes.root} >
+                                <CardActionArea>
+                                    <CardMedia
+                                        className={classes.media}
+                                        image={`${process.env.REACT_APP_IMAGE_ORIGINAL_PATH}${item.poster_path}`}
+                                        title={item.original_title}
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            {item.title}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            {
+                                                item.overview
+                                            }
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>                           
+                            </Card>
+                        </Box>          
+                        )
+                    })
+                }
+            </Box>
+        </>
     )
 };
 
