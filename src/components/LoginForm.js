@@ -47,7 +47,9 @@ const LoginForm = props => {
         }).catch(e => {
             
             setLoader(false)
-            console.log(e.response)
+            // console.log(e.response)
+            console.log(e)
+
             setOpenSnackbar(true)
         })
     };
