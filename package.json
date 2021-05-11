@@ -16,7 +16,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "global": "^4.4.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "netlify-cli": "^2.58.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
